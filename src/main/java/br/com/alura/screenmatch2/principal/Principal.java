@@ -1,5 +1,6 @@
 package br.com.alura.screenmatch2.principal;
 
+import br.com.alura.screenmatch2.model.DadosEpisodio;
 import br.com.alura.screenmatch2.model.DadosSerie;
 import br.com.alura.screenmatch2.model.DadosTemporada;
 import br.com.alura.screenmatch2.service.ConsumoApi;
@@ -24,8 +25,6 @@ public class Principal {
         System.out.println("Digite o nome da série para busca");
 
         var nomeSerie = leitura.nextLine();
-        //var consumoApi = new ConsumoApi();
-
         var json = consumo.obterDados(        ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
 
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
@@ -34,14 +33,26 @@ public class Principal {
         List<DadosTemporada> temporadas = new ArrayList<>();
 
         for (int i = 1; i <= dados.totalTemporadas(); i++) {
-
             json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ", "+") + "&season=" + i
                     + API_KEY);
             DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
             temporadas.add(dadosTemporada);
         }
 
+        /* Lambda
+        *  temporadas.forEach(t -> System.out.println(t)) = temporadas.forEach(System.out::println);
+         */
         temporadas.forEach(System.out::println);
+
+//        for (int i =0; i < dados.totalTemporadas(); i++) {
+//            List<DadosEpisodio> episodiosTemporada = temporadas.get(i).episodios();
+//            for (int j = 0; j < episodiosTemporada.size(); j++) {
+//                System.out.println(episodiosTemporada.get(j).titulo());
+//            }
+//        }
+
+        temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
+        //temporadas.forEach(System.out::println);
 
     }
 }
