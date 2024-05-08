@@ -140,6 +140,17 @@ public class Principal {
         System.out.println(avaliacaoPorTemporara);
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 
+        System.out.println(" Estatiscias de Avaliações");
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e -> e.getAvaliacao() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getAvaliacao));
+
+       // System.out.println(est);
+        System.out.println("Média avalição:" + est.getAverage());
+        System.out.println("Episódio menores  votos:" + est.getMin());
+        System.out.println("Episódio maiores votos:" + est.getMax());
+        System.out.println("Qunantide Episódios:" + est.getCount());
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 
     }
 }
