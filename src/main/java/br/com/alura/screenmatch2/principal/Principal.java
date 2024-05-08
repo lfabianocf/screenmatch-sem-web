@@ -110,24 +110,36 @@ public class Principal {
 
         System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 
+        System.out.println(" Busca por ano ");
+        System.out.println("A partir de que ano você deseja ver os episódios? ");
+        var ano = leitura.nextInt();
+        leitura.nextLine();
 
-//        System.out.println("A partir de que ano você deseja ver os episódios? ");
-//        var ano = leitura.nextInt();
-//        leitura.nextLine();
-//
-//        LocalDate dataBusca = LocalDate.of(ano, 1,1);
-//
-//
-//        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-//
-//
-//        episodios.stream()
-//                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
-//                .forEach(e -> System.out.println(
-//                        "Temporada: " + e.getTemporada() +
-//                                " Episódio: " + e.getTitulo() +
-//                                " Data lançamento: " + e.getDataLancamento().format(formatador)
-//                ));
+        LocalDate dataBusca = LocalDate.of(ano, 1,1);
+
+
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+
+
+        episodios.stream()
+                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
+                .forEach(e -> System.out.println(
+                        "Temporada: " + e.getTemporada() +
+                                " Episódio: " + e.getTitulo() +
+                                " Data lançamento: " + e.getDataLancamento().format(formatador)
+                ));
+
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        System.out.println(" Avaliação por temporada-");
+
+        Map<Integer,Double> avaliacaoPorTemporara = episodios.stream()
+                .filter(e -> e.getAvaliacao() > 0.0)
+                .collect(Collectors.groupingBy(Episodio::getTemporada,
+                        Collectors.averagingDouble(Episodio::getAvaliacao)));
+
+        System.out.println(avaliacaoPorTemporara);
+        System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+
 
     }
 }
