@@ -70,11 +70,16 @@ public class Principal {
                 .flatMap(t -> t.episodios().stream())
                 .collect(Collectors.toList());
 
-        System.out.println("\nTop 5 episodi0s");
+        System.out.println("\nTop 10 episodi0s");
         dadosEpisodios.stream()
                 .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+               // .peek(e -> System.out.println("Primeiro filtro(N/A) " + e))
                 .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
-                .limit(5)
+                //.peek(e -> System.out.println("Ordenacao  " + e))
+                .limit(10)
+               // .peek(e -> System.out.println("Limite " + e))
+                .map(e -> e.titulo().toUpperCase())
+                //.peek(e -> System.out.println("funcao MAP " + e))
                 .forEach(System.out::println);
 
         List<Episodio> episodios = temporadas.stream()
@@ -103,12 +108,5 @@ public class Principal {
                                 " Data lançamento: " + e.getDataLancamento().format(formatador)
                 ));
 
-        /*episodios.stream()
-                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
-                .forEach(e -> System.out.println(
-                        String.format(String.format("Temporada: " + e.getTemporada() +
-                                " Episódio: " + e.getTitulo() +
-                                " Data lançamento: " + e.getDataLancamento().format(formatador)))
-                ));*/
     }
 }
