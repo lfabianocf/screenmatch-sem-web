@@ -15,6 +15,7 @@ public class Episodio {
         this.temporada = numeroTemporada;
         this.titulo = dadosEpisodio.titulo();
         this.numeroEpisodio = dadosEpisodio.numero();
+
         try {
             this.avaliacao = Double.valueOf(dadosEpisodio.avaliacao());
         } catch (NumberFormatException numberFormatException) {
@@ -26,9 +27,6 @@ public class Episodio {
         } catch ( DateTimeParseException ex) {
             this.dataLancamento = null;
         }
-
-
-
     }
 
     public Integer getTemporada() {
